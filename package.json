@@ -1,17 +1,56 @@
 {
-  "name": "atrament",
-  "version": "5.1.0",
+  "name": "@substrate-system/atrament",
+  "version": "5.1.1",
   "description": "Tiny JS library for beautiful drawing and handwriting on the HTML Canvas",
-  "main": "./dist/cjs/index.js",
-  "module": "./dist/esm/index.js",
-  "scripts": {
-    "build": "rollup --config",
-    "watch": "rollup --config --watch",
-    "lint": "./node_modules/eslint/bin/eslint.js ./src"
+  "files": [
+    "./dist/*"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./*": {
+      "import": "./dist/*.js",
+      "require": "./dist/*.cjs"
+    }
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/jakubfiala/atrament.git"
+  "scripts": {
+    "lint": "eslint \"./**/*.{ts,js}\"",
+    "test": "esbuild ./test/index.ts --bundle | tapout",
+    "build-cjs": "esbuild src/*.ts --format=cjs --keep-names --tsconfig=tsconfig.build.json --outdir=./dist --out-extension:.js=.cjs --sourcemap",
+    "build-cjs:min": "esbuild src/*.ts --format=cjs --minify --keep-names --tsconfig=tsconfig.build.json --outdir=./dist --out-extension:.js=.min.cjs --sourcemap",
+    "build-esm": "esbuild src/*.ts --format=esm --metafile=dist/meta.json --keep-names --tsconfig=tsconfig.build.json --outdir=./dist --sourcemap && tsc --emitDeclarationOnly --project tsconfig.build.json --outDir dist",
+    "build-esm:min": "esbuild ./src/*.ts --format=esm --keep-names --bundle --tsconfig=tsconfig.build.json --minify --out-extension:.js=.min.js --outdir=./dist --sourcemap",
+    "build-example": "mkdir -p ./public && rm -rf ./public/* && VITE_DEBUG_MODE=staging vite --mode staging --base=\"/atrament\" build",
+    "build-docs": "typedoc ./src/index.ts",
+    "build": "mkdir -p ./dist && rm -rf ./dist/* && npm run build-cjs && npm run build-esm && npm run build-esm:min && npm run build-cjs:min",
+    "start": "vite",
+    "toc": "markdown-toc --maxdepth 3 -i README.md",
+    "preversion": "npm run lint",
+    "version": "npm run toc && auto-changelog -p --template keepachangelog --breaking-pattern 'BREAKING CHANGE:' && git add CHANGELOG.md README.md",
+    "postversion": "git push --follow-tags && npm publish",
+    "prepublishOnly": "npm run build"
+  },
+  "devDependencies": {
+    "@preact/preset-vite": "^2.10.2",
+    "@substrate-system/debug": "^0.9.2",
+    "@substrate-system/tapout": "^0.0.24",
+    "@substrate-system/tapzero": "^0.10.15",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
+    "auto-changelog": "^2.4.0",
+    "esbuild": "^0.25.8",
+    "eslint": "^8.57.0",
+    "eslint-config-standard": "^17.1.0",
+    "htm": "^3.1.1",
+    "markdown-toc": "^1.2.0",
+    "postcss-nesting": "^13.0.2",
+    "preact": "^10.27.0",
+    "tap-spec": "^5.0.0",
+    "typedoc": "^0.28.9",
+    "typescript": "^5.9.2",
+    "vite": "^7.0.6"
   },
   "keywords": [
     "canvas",
@@ -19,33 +58,17 @@
     "handwriting",
     "graphics"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/substrate-system/atrament.git"
+  },
   "author": "Jakub Fiala",
-  "license": "SEE LICENSE IN LICENSE.md",
+  "contributors": [
+    "nichoth <nichoth@nichoth.com> (https://nichoth.com)"
+  ],
+  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jakubfiala/atrament/issues"
+    "url": "https://github.com/substrate-system/atrament/issues"
   },
-  "homepage": "https://github.com/jakubfiala/atrament#readme",
-  "exports": {
-    ".": {
-      "import": "./dist/esm/index.js",
-      "require": "./dist/cjs/index.js"
-    },
-    "./fill": {
-      "import": "./dist/esm/fill.js",
-      "require": "./dist/cjs/fill.js"
-    }
-  },
-  "devDependencies": {
-    "@rollup/plugin-terser": "^0.4.4",
-    "eslint": "^8.56.0",
-    "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-plugin-import": "^2.26.0",
-    "rollup": "^4.9.4",
-    "rollup-plugin-web-worker-loader": "^1.6.1"
-  },
-  "overrides": {
-    "rollup-plugin-web-worker-loader": {
-      "rollup": "$rollup"
-    }
-  }
+  "homepage": "https://github.com/substrate-system/atrament"
 }

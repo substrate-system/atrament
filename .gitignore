@@ -1,7 +1,6 @@
 node_modules
-npm
-uglifyjs
-dev-demo
-.DS_STORE
-.idea
-test.html
+bundle.js
+.DS_Store
+.env
+dist
+.claude
