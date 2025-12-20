@@ -10,7 +10,7 @@ This is a fork of [jakubfiala/atrament](https://github.com/jakubfiala/atrament).
 
 - [Installation](#installation)
 - [Usage](#usage)
-  * [create a `` tag](#create-a--tag)
+  * [create a canvas tag](#create-a-canvas-tag)
   * [Javascript](#javascript)
 - [Options & config](#options--config)
   * [Clear the canvas:](#clear-the-canvas)
@@ -78,7 +78,7 @@ npm i -S @substrate-system/atrament
 
 ## Usage
 
-### create a `<canvas>` tag
+### create a canvas tag
 
 ```html
 <canvas id="sketchpad" width="500" height="500"></canvas>
