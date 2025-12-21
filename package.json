@@ -22,9 +22,9 @@
   "scripts": {
     "lint": "eslint \"./**/*.{ts,js}\"",
     "test": "esbuild ./test/index.ts --bundle | tapout",
-    "build-cjs": "esbuild src/**/*.ts --format=cjs --keep-names --tsconfig=tsconfig.build.json --outdir=./dist --outbase=src --out-extension:.js=.cjs --sourcemap",
-    "build-cjs:min": "esbuild src/**/*.ts --format=cjs --minify --keep-names --tsconfig=tsconfig.build.json --outdir=./dist --outbase=src --out-extension:.js=.min.cjs --sourcemap",
-    "build-esm": "esbuild src/**/*.ts --format=esm --metafile=dist/meta.json --keep-names --tsconfig=tsconfig.build.json --outdir=./dist --outbase=src --sourcemap && tsc --emitDeclarationOnly --project tsconfig.build.json --outDir dist",
+    "build-cjs": "esbuild src/*.ts src/**/*.ts --format=cjs --keep-names --tsconfig=tsconfig.build.json --outdir=./dist --outbase=src --out-extension:.js=.cjs --sourcemap",
+    "build-cjs:min": "esbuild src/*.ts src/**/*.ts --format=cjs --minify --keep-names --tsconfig=tsconfig.build.json --outdir=./dist --outbase=src --out-extension:.js=.min.cjs --sourcemap",
+    "build-esm": "esbuild src/*.ts src/**/*.ts --format=esm --metafile=dist/meta.json --keep-names --tsconfig=tsconfig.build.json --outdir=./dist --outbase=src --sourcemap && tsc --emitDeclarationOnly --project tsconfig.build.json --outDir dist",
     "build-esm:min": "esbuild ./src/*.ts ./src/fill/worker.ts ./src/fill/flood.ts --format=esm --keep-names --bundle --tsconfig=tsconfig.build.json --minify --out-extension:.js=.min.js --outdir=./dist --outbase=src --sourcemap",
     "build-example": "mkdir -p ./public && rm -rf ./public/* && vite --mode staging --base=\"/atrament\" build",
     "build-docs": "typedoc ./src/index.ts",
