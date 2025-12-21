@@ -27,7 +27,7 @@ const adaptiveInput = document.getElementById('adaptive') as HTMLInputElement
 const secondaryEraserInput = document.getElementById('secondary-eraser') as HTMLInputElement
 const modeInput = document.getElementById('mode') as HTMLSelectElement
 
-const modes: Record<string, Mode> = {
+const modes:Record<string, Mode> = {
     draw: MODE_DRAW,
     fill: MODE_FILL,
     erase: MODE_ERASE,

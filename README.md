@@ -220,13 +220,57 @@ sketchpad.recordStrokes = true;
 From version 5.0.0, Atrament will not bundle the fill Worker within the main
 bundle. This is so applications that don't require fill mode
 benefit from about a 60% smaller import size. The fill module can be
-imported separately and injected into Atrament via the constructor:
+imported separately and injected into Atrament via the constructor.
+
+### With Vite
+
+If you're using [Vite](https://vitejs.dev/), you can use the `?worker` import
+syntax to inline the worker:
 
 ```js
-import Atrament from 'atrament';
-import fill from 'atrament/fill';
+import Atrament from '@substrate-system/atrament';
+import FillWorker from '@substrate-system/atrament/fill?worker';
 
-const sketchpad = new Atrament({ fill });
+const sketchpad = new Atrament(canvas, {
+  fill: new FillWorker()
+});
+```
+
+### Without Vite (direct browser usage)
+
+For non-Vite environments or pre-bundled browser builds, create the worker
+manually using the worker file URL:
+
+```js
+import Atrament from '@substrate-system/atrament';
+
+const fillWorker = new Worker(
+  new URL('@substrate-system/atrament/fill', import.meta.url),
+  { type: 'module' }
+);
+
+const sketchpad = new Atrament(canvas, {
+  fill: fillWorker
+});
+```
+
+### Using the minified bundle
+
+For direct browser usage with the minified bundle:
+
+```html
+<script type="module">
+  import Atrament from './node_modules/@substrate-system/atrament/dist/index.min.js';
+
+  const fillWorker = new Worker(
+    './node_modules/@substrate-system/atrament/dist/fill/worker.min.js',
+    { type: 'module' }
+  );
+
+  const sketchpad = new Atrament(canvas, {
+    fill: fillWorker
+  });
+</script>
 ```
 
 ## Data model
