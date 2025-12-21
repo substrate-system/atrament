@@ -1,6 +1,6 @@
 {
   "name": "@substrate-system/atrament",
-  "version": "5.1.2",
+  "version": "5.1.3",
   "description": "Tiny JS library for beautiful drawing and handwriting on the HTML Canvas",
   "files": [
     "./dist/*"
